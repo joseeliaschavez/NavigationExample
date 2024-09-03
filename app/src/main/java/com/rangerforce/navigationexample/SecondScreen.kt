@@ -23,11 +23,12 @@ import com.rangerforce.navigationexample.ui.theme.NavigationExampleTheme
 
 @Composable
 fun SecondScreen(
+    modifier: Modifier = Modifier,
+    name: String = "Unknown",
     handleForwardNavigation: () -> Unit,
     handleBackwardNavigation: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
-    val name by remember { mutableStateOf("") }
+    val nameState by remember { mutableStateOf(name) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -38,7 +39,11 @@ fun SecondScreen(
     ) {
         Text(text = "2", fontSize = 32.sp)
         Spacer(modifier = modifier.height(16.dp))
-        OutlinedTextField(value = name, onValueChange = { /*TODO*/ })
+        OutlinedTextField(
+            value = nameState,
+            onValueChange = { },
+            readOnly = true
+        )
         Spacer(modifier = modifier.height(16.dp))
         Row {
             Button(onClick = { handleBackwardNavigation() }) {

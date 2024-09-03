@@ -33,12 +33,14 @@ fun NavigableApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "first") {
         composable("first") {
-            FirstScreen(handleNavigation = {
-                navController.navigate("second")
+            FirstScreen(handleNavigation = { name ->
+                val safeName = name.ifEmpty { "Not Given" }
+                navController.navigate("second/$safeName")
             })
         }
-        composable("second") {
+        composable("second/{name}") {
             SecondScreen(
+                name = it.arguments?.getString("name") ?: "Unknown",
                 handleForwardNavigation = { navController.navigate("third") },
                 handleBackwardNavigation = { navController.popBackStack() }
             )

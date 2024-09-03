@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,8 +22,8 @@ import androidx.compose.ui.unit.sp
 import com.rangerforce.navigationexample.ui.theme.NavigationExampleTheme
 
 @Composable
-fun FirstScreen(modifier: Modifier = Modifier, handleNavigation: () -> Unit) {
-    val name by remember { mutableStateOf("") }
+fun FirstScreen(modifier: Modifier = Modifier, handleNavigation: (String) -> Unit) {
+    var name by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -33,9 +34,9 @@ fun FirstScreen(modifier: Modifier = Modifier, handleNavigation: () -> Unit) {
     ) {
         Text(text = "1", fontSize = 32.sp)
         Spacer(modifier = modifier.height(16.dp))
-        OutlinedTextField(value = name, onValueChange = { /*TODO*/ })
+        OutlinedTextField(value = name, onValueChange = { name = it })
         Spacer(modifier = modifier.height(16.dp))
-        Button(onClick = { handleNavigation() }) {
+        Button(onClick = { handleNavigation(name) }) {
             Text(text = "Next Screen")
         }
     }

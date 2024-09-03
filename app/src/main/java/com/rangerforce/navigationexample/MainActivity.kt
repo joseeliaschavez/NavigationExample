@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -31,18 +32,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NavigableApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
+    val sharedViewModel: SharedViewModel = viewModel()
     NavHost(navController = navController, startDestination = "first") {
         composable("first") {
-            FirstScreen(handleNavigation = { name ->
-                val safeName = name.ifEmpty { "Not Given" }
-                navController.navigate("second/$safeName")
-            })
+            FirstScreen(
+                handleNavigation = { navController.navigate("second") },
+                sharedViewModel = sharedViewModel
+            )
         }
-        composable("second/{name}") {
+        composable("second") {
             SecondScreen(
-                name = it.arguments?.getString("name") ?: "Unknown",
                 handleForwardNavigation = { navController.navigate("third") },
-                handleBackwardNavigation = { navController.popBackStack() }
+                handleBackwardNavigation = { navController.popBackStack() },
+                sharedViewModel = sharedViewModel
             )
         }
         composable("third") {

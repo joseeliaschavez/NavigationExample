@@ -12,6 +12,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -19,16 +20,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rangerforce.navigationexample.ui.theme.NavigationExampleTheme
 
 @Composable
 fun SecondScreen(
     modifier: Modifier = Modifier,
-    name: String = "Unknown",
+    sharedViewModel: SharedViewModel = viewModel(),
     handleForwardNavigation: () -> Unit,
     handleBackwardNavigation: () -> Unit,
 ) {
-    val nameState by remember { mutableStateOf(name) }
+    val nameState by remember { mutableStateOf(sharedViewModel.name) }
+    val ageState by remember { mutableIntStateOf(sharedViewModel.age) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -44,6 +47,8 @@ fun SecondScreen(
             onValueChange = { },
             readOnly = true
         )
+        Spacer(modifier = modifier.height(16.dp))
+        OutlinedTextField(value = ageState.toString(), onValueChange = { }, readOnly = true)
         Spacer(modifier = modifier.height(16.dp))
         Row {
             Button(onClick = { handleBackwardNavigation() }) {

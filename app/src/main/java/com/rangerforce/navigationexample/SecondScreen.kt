@@ -2,6 +2,7 @@ package com.rangerforce.navigationexample
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -21,7 +22,11 @@ import androidx.compose.ui.unit.sp
 import com.rangerforce.navigationexample.ui.theme.NavigationExampleTheme
 
 @Composable
-fun SecondScreen(modifier: Modifier = Modifier) {
+fun SecondScreen(
+    handleForwardNavigation: () -> Unit,
+    handleBackwardNavigation: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val name by remember { mutableStateOf("") }
 
     Column(
@@ -31,12 +36,18 @@ fun SecondScreen(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .padding(8.dp)
     ) {
-        Text(text = "This is the Second Screen", fontSize = 16.sp)
+        Text(text = "2", fontSize = 32.sp)
         Spacer(modifier = modifier.height(16.dp))
         OutlinedTextField(value = name, onValueChange = { /*TODO*/ })
         Spacer(modifier = modifier.height(16.dp))
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "Previous Screen")
+        Row {
+            Button(onClick = { handleBackwardNavigation() }) {
+                Text(text = "Previous Screen")
+            }
+            Spacer(modifier = modifier.height(16.dp))
+            Button(onClick = { handleForwardNavigation() }) {
+                Text(text = "Next Screen")
+            }
         }
     }
 }
@@ -45,6 +56,6 @@ fun SecondScreen(modifier: Modifier = Modifier) {
 @Composable
 fun SecondScreenPreview() {
     NavigationExampleTheme {
-        SecondScreen()
+        SecondScreen(handleForwardNavigation = {}, handleBackwardNavigation = {})
     }
 }

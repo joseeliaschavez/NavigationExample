@@ -32,7 +32,21 @@ class MainActivity : ComponentActivity() {
 fun NavigableApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "first") {
-        composable("first") { FirstScreen() }
-        composable("second") { SecondScreen() }
+        composable("first") {
+            FirstScreen(handleNavigation = {
+                navController.navigate("second")
+            })
+        }
+        composable("second") {
+            SecondScreen(
+                handleForwardNavigation = { navController.navigate("third") },
+                handleBackwardNavigation = { navController.popBackStack() }
+            )
+        }
+        composable("third") {
+            ThirdScreen(handleNavigation = {
+                navController.navigate("first")
+            })
+        }
     }
 }

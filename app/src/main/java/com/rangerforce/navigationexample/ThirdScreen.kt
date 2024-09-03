@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.rangerforce.navigationexample.ui.theme.NavigationExampleTheme
 
 @Composable
-fun FirstScreen(modifier: Modifier = Modifier, handleNavigation: () -> Unit) {
+fun ThirdScreen(modifier: Modifier = Modifier, handleNavigation: () -> Unit) {
     val name by remember { mutableStateOf("") }
 
     Column(
@@ -31,7 +31,7 @@ fun FirstScreen(modifier: Modifier = Modifier, handleNavigation: () -> Unit) {
             .fillMaxSize()
             .padding(8.dp)
     ) {
-        Text(text = "1", fontSize = 32.sp)
+        Text(text = "3", fontSize = 32.sp)
         Spacer(modifier = modifier.height(16.dp))
         OutlinedTextField(value = name, onValueChange = { /*TODO*/ })
         Spacer(modifier = modifier.height(16.dp))
@@ -43,8 +43,8 @@ fun FirstScreen(modifier: Modifier = Modifier, handleNavigation: () -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun FirstScreenPreview() {
+fun ThirdScreenPreview() {
     NavigationExampleTheme {
-        FirstScreen(handleNavigation = {})
+        ThirdScreen(handleNavigation = {})
     }
 }
